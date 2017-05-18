@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<!-- This is based on DillingerLee's great template here:
+
+https://github.com/Team-Code/KA_Offline -->
+
+<html> 
+ 
+ <head>
+    
+    <title>Processing.JS inside Webpages: Template</title> 
+
+</head>
+ 
+ <body>
+    
+    <p align="center"> 
+	
+    <!--This draws the Canvas on the webpage -->
+      
+      <canvas id="mycanvas"></canvas> 
+    
+    </p>
+ 
+</body>
+ 
+
+ 
+<!-- Run all the JavaScript stuff -->
+ 
+<!-- Include the processing.js library -->
+ 
+<!-- See https://khanacademy.zendesk.com/hc/en-us/articles/202260404-What-parts-of-ProcessingJS-does-Khan-Academy-support- for differences -->
+ 
+ <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
+ 
+ 
+ <script>
+
+    var sketchProc = function(processingInstance) {
+
+     with (processingInstance) {
+
+        size(600, 400);
+ 
+       frameRate(30);
+
+	var randomBallY = Math.floor(Math.random() * 400);
+	var ballX = -10;
+	var ballY = randomBallY;
+	var speed = 5;
+	var catches = 0;
+	var misses = 0;
+	var counter = 0;
+	
+	//Start the game
+	prompt("Use the mouse to catch the balls from the left of the screen. Get ready they're coming fast! \n \nAre you ready to play GOOOAAALLLLL! ?")
+	
+	draw = function()
+	{
+	
+        
+background(0,0,0);
+	
+	//Game
+	//Scene
+	//And
+	//Objects
+
+	//Catcher
+	fill(255, 255, 0);
+	arc(550, mouseY, 50, 50, -2, 2);
+
+	//Back Goal
+	fill(0, 255, 0);
+	rect(590, -1, 600, 401);
+
+	//Top Goalpost
+	noStroke();
+	fill(0, 255, 0);
+	rect(570, -1, 50, 10);
+
+	//Bottom Goalpost
+	noStroke();
+	fill(0, 255, 0);
+	rect(570, 391, 50, 11);
+	speed=15;
+
+	//The Ball
+	fill(255, 255, 255);
+	ellipse(ballX, ballY, 20, 20);
+	ballX+=speed;
+
+	//Ball caught and randomly relaunches
+	
+	if(ballX>550 && ballX<590 && mouseY<ballY+25 && mouseY>ballY-25)
+	{
+		ballX=-50;
+		ballY=Math.floor(Math.random() * 400);
+		if(ballX===-50)
+		{
+			catches++;
+		}
+		
+		counter++;
+	}
+
+	//Ball missed and randomly relaunched
+
+	else if (ballX >=590)
+	{
+		ballX=-50;
+		ballY=Math.floor(Math.random() * 400);
+		counter++;
+		misses++;
+		
+	}
+
+	//Game End and Results
+
+	if(counter>=10)
+	{
+		fill(255,255,255);
+		textSize(30);
+		text("Game Over Man", 200, 150);
+
+		textSize(30);
+		text("Congrats!", 240, 260);
+
+		textSize(30);
+		text("You caught " + catches + " out of 10 balls!", 120, 300);
+
+		if(catches===10)
+		{
+		textSize(30);
+		text("Perfecto!", 240, 340);
+		}
+		
+	//No more game ball sent off screen
+
+		ballX=-50;
+		ballY=-50;
+	}
+	
+	
+	};
+}};
+
+
+
+// Get the canvas that Processing-js will use
+
+    var canvas = document.getElementById("mycanvas");
+ 
+    // Pass the function sketchProc (defined in myCode.js) to Processing's constructor.
+
+    var processingInstance = new Processing(canvas, sketchProc);
+ 
+ </script>
+
+
+</html>
